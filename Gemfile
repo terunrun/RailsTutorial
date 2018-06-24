@@ -36,4 +36,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #guard‚ðŽÀs‚·‚é‚Æ“ü‚ê‚ë‚ÆŒ¾‚í‚ê‚½gem
-gem 'wdm', '>= 0.1.0'
+#gem 'wdm', '>= 0.1.0'
