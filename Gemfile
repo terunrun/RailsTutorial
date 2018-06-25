@@ -12,6 +12,8 @@ gem 'jbuilder',     '2.7.0'
 group :development, :test do
   gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
+ #guardを実行すると入れろと言われたgem
+ gem 'wdm', '>= 0.1.0'
 end
 
 group :development do
@@ -34,9 +36,6 @@ end
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-#guardを実行すると入れろと言われたgem
-gem 'wdm', '>= 0.1.0'
 
 #5.1.2 bootstrap追加
 gem 'bootstrap-sass', '3.3.7'
