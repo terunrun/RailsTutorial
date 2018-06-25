@@ -36,4 +36,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #guard‚ðŽÀs‚·‚é‚Æ“ü‚ê‚ë‚ÆŒ¾‚í‚ê‚½gem
-#gem 'wdm', '>= 0.1.0'
+gem 'wdm', '>= 0.1.0'
+
+#5.1.2 bootstrap’Ç‰Á
+gem 'bootstrap-sass', '3.3.7'
