@@ -13,3 +13,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+// 8.2.4 bootstrapに同梱のJavascript/JQueryライブラリを使用可能にする
+//= require jquery
+//= require bootstrap
