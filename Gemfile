@@ -12,8 +12,9 @@ gem 'jbuilder',     '2.7.0'
 group :development, :test do
   gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
- #guard‚ðŽÀs‚·‚é‚Æ“ü‚ê‚ë‚ÆŒ¾‚í‚ê‚½gem
- gem 'wdm', '>= 0.1.0'
+  #gem 'byebug',  '~>9.0.6', platform: :ruby
+#guard‚ðŽÀs‚·‚é‚Æ“ü‚ê‚ë‚ÆŒ¾‚í‚ê‚½gem
+  gem 'wdm', '>= 0.1.0'
 end
 
 group :development do
