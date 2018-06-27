@@ -45,9 +45,34 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_not is_logged_in?
     # 8.3 root（home）へリダイレクトしていることを確認
     assert_redirected_to root_url
+    # 9.1.4 2回目のdeleteリクエストをログアウトパスに対して発行（別ウィンドウを閉じる）
+    delete logout_path
     follow_redirect!
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", logout_path, count: 0
     assert_select "a[href=?]", user_path(@user), count: 0
   end
+
+  # 9.3 remember_meのテスト(1)
+  test "login with remembering" do
+    # 9.3 fixtureのユーザーで、remember_me設定値を1でログイン
+    log_in_as(@user, remember_me: '1')
+    # 9.3 cookiesにremember_tokenが存在するか
+    # 9.3 テストではcookiesにシンボル（:remember_token）が使用できないため文字列で記載
+    assert_not_empty cookies['remember_token']
+  end
+
+  # 9.3 remember_meのテスト(0)
+  test "login without remembering" do
+    # 9.3 fixtureのユーザーで、remember_me設定値を1でログイン
+    log_in_as(@user, remember_me: '1')
+    # 9.3 ログアウトする
+    delete logout_path
+    # 9.3 fixtureのユーザーで、remember_me設定値を0でログイン
+    log_in_as(@user, remember_me: '0')
+    # 9.3 cookiesにremember_tokenが存在しないか
+    assert_empty cookies['remember_token']
+  end
+
+
 end

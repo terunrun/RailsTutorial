@@ -9,6 +9,9 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # 8.2.1 SessionsHelperのlog_inメソッドを使用して一時セッションを作成
       log_in user
+      # 9.1.2 ログイン状態を保持
+      # 9.2 remember_meチェックが入っている場合にログイン情報を覚えさせる（三項目演算子記法）
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       # flashに成功メッセージを設定
       flash[:success] = "ログインに成功しました。"
       # 8.2.1 ログインユーザーの画面へリダイレクト
@@ -25,7 +28,8 @@ class SessionsController < ApplicationController
 
   def destroy
     # 8.3 seesions_helper.rbで定義したlogoutメソッドでログアウト
-    log_out
+    # 9.1.4 ログインしている場合にのみログアウトメソッドを実行
+    log_out if logged_in?
     # 8.3 ログアウト後はroot（home）へ遷移
     redirect_to root_url
     #render 'static_pages/home.html.erb'
