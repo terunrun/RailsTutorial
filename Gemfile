@@ -13,7 +13,7 @@ group :development, :test do
   gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
   #gem 'byebug',  '~>9.0.6', platform: :ruby
-#guard‚ğÀs‚·‚é‚Æ“ü‚ê‚ë‚ÆŒ¾‚í‚ê‚½gem
+#guardï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Æ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆŒï¿½ï¿½ï¿½ï¿½ê‚½gem
   gem 'wdm', '>= 0.1.0'
 end
 
@@ -35,11 +35,18 @@ group :production do
   gem 'pg', '0.20.0'
 end
 
-# WindowsŠÂ‹«‚Å‚Ítzinfo-data‚Æ‚¢‚¤gem‚ğŠÜ‚ß‚é•K—v‚ª‚ ‚è‚Ü‚·
+# Windowsï¿½Â‹ï¿½ï¿½Å‚ï¿½tzinfo-dataï¿½Æ‚ï¿½ï¿½ï¿½gemï¿½ï¿½ï¿½Ü‚ß‚ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-#5.1.2 bootstrap’Ç‰Á
+#5.1.2 bootstrapï¿½Ç‰ï¿½
 gem 'bootstrap-sass', '3.3.7'
 
-#6.3.1 bcrypt’Ç‰Á
+#6.3.1 bcryptï¿½Ç‰ï¿½
 gem 'bcrypt', '~> 3.1.11'
+
+# 10.3.2 ã‚µãƒ³ãƒ—ãƒ«ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®è¿½åŠ 
+gem 'faker', '1.7.3'
+
+# 10.3.3 ãƒšãƒ¼ã‚¸ãƒãƒ¼ã‚·ãƒ§ãƒ³
+gem 'will_paginate', '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'

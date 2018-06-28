@@ -1,25 +1,10 @@
 <% provide(:title, 'Sign up') %>
+<!-- 10.1.1 form部分のpertial化に伴いボタン名称を設定-->
+<% provide(:button_text, 'Sign up') %>
 <h1>Sign up</h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user, url:signup_path) do |f| %>
-      <!-- エラーメッセージ用pertial画面-->
-      <%= render 'shared/error_messages' %>
-
-      <%= f.label :name %>
-      <!-- form-controlクラスでエラー時のフォーム表示を変更-->
-      <%= f.text_field :name, class: "form-control" %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control" %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: "form-control" %>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: "form-control" %>
-
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
-    <% end %>
+    <!-- 10.1.1 form部分のpertial化に伴いレイアウトファイルを呼び出し-->
+    <%= render 'layouts/form' %>
   </div>
 </div>

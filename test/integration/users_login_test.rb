@@ -36,7 +36,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_template 'users/show'
     # 8.2.4 loginリンクが表示されていない(count: 0)かをテスト
     assert_select "a[href=?]", login_path, count: 0
-    # 8.2.4 logoutリンク、@userに紐づくProfileリンクが表示されていないかをテスト
+    # 8.2.4 logoutリンク、@userに紐づくProfileリンクが表示されているかをテスト
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user)
     # 8.3 deleteリクエストをログアウトパスに対して発行

@@ -11,8 +11,9 @@ class User < ApplicationRecord
                     format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
   # 6.3 セキュアパスワード用メソッドhas_secure_passwordを使用することで、
   # password/password_confirmation属性へのアクセサ、いくつかのバリデーションが与えられる
+  # 10.1.4 パスワードが空の時に精査しないallow_nilオプションを追加
   has_secure_password
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, presence: true, length: {minimum: 6}, allow_nil: true
 
   # 8.2.4 渡された文字をハッシュ化するクラスメソッド
   def User.digest(string)

@@ -1,0 +1,24 @@
+<!-- 10.3.1 ユーザー一覧画面を作成-->
+<% provide(:title, 'All users')%>
+<h1>All users</h1>
+
+<!-- 10.3.3 ページネーションを読み込み -->
+<%= will_paginate %>
+
+<ul class="users">
+  <!-- 10.3.1 各ユーザーごとに画像、ユーザー名（プロフィール画面へリンク）を表示-->
+  <!-- 10.3.5 リファクタリング
+  <% @users.each do |user| %>
+    <li>
+      <%= gravatar_for user, size: 50 %>
+      <%= link_to user.name, user %>
+    </li>
+  <% end %>
+  -->
+  <!--10.3.5 _user.html.erbというパーシャルにレンダリングされる -->
+  <!--10.3.5 @usersがUserオブジェクトのリストであると認識される -->
+  <%= render @users %>
+</ul>
+
+<!-- 10.3.3 ページネーションを読み込み -->
+<%= will_paginate %>

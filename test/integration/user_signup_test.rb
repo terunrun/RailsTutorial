@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserSignupTest < ActionDispatch::IntegrationTest
   test "invalid signup information" do
-    # signup_pathいGETリクエスト
+    # signup_pathniGETリクエスト
     get signup_path
 
     # assert_no_differeneceの引数をUser.countにすることで、実行前後のカウント結果を比較

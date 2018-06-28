@@ -16,7 +16,9 @@ class SessionsController < ApplicationController
       flash[:success] = "ログインに成功しました。"
       # 8.2.1 ログインユーザーの画面へリダイレクト
       # 8.2.1 user_url(user)と等価。引数ユーザーのプロフィールページへのルーティングを作成
-      redirect_to user
+      # redirect_to user
+      # 10.2.3 元URLへリダイレクト（ない場合はプロフィールページ）
+      redirect_back_or user
     else
       # flashに失敗メッセージを設定。一度で消えるようにするためflash.nowを使用。
       flash.now[:danger] = "ログインに失敗しました。

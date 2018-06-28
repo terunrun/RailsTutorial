@@ -1,0 +1,10 @@
+<!-- 10.3.5 indexのユーザー表示部分のパーシャル -->
+<li>
+  <%= gravatar_for user, size: 50 %>
+  <%= link_to user.name, user %>
+  <!-- 10.4.2 現在のユーザーが管理者かつ＊＊＊の場合に削除リンクを表示 -->
+  <% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to "delete", user, method: :delete,
+                                   data: {confirm: "このユーザーを本当に削除しますか？"} %>
+  <% end %>
+</li>

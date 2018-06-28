@@ -8,19 +8,19 @@
          <!-- 8.2.4 ログインしているか否かでメニューの表示内容を切り替え -->
          <% if logged_in? %>
          <!-- 8.2.4 ログインしている場合 -->
-           <li><%= link_to "Users", '#' %></li>
+           <li><%= link_to "Users", users_path %></li>
            <li class="dropdown">
              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                Account <b class="caret"></b>
              </a>
              <!-- 8.2.4 accountをプルダウンメニューにする -->
              <ul class="dropdown-menu">
-               <li><%= link_to "Setting", '#' %></li>
-               <li><%= link_to "Log out", logout_path, method: :delete %></li>
+               <li><%= link_to "Profile", current_user %></li>
+               <li><%= link_to "Setting", edit_user_path(current_user) %></li>
                <!-- 8.2.4 Profileメニューは他と分ける -->
                <li class="divider"></li>
                <li>
-                 <%= link_to "Profile", current_user %>
+                 <%= link_to "Log out", logout_path, method: :delete %>
                </li>
              </ul>
            </li>
