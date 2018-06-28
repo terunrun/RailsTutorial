@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserSignupTest < ActionDispatch::IntegrationTest
   test "invalid signup information" do
-    # signup_pathniGETリクエスト
+    # signup_pathにGETリクエスト
     get signup_path
 
     # assert_no_differeneceの引数をUser.countにすることで、実行前後のカウント結果を比較
@@ -15,8 +15,11 @@ class UserSignupTest < ActionDispatch::IntegrationTest
     end
     # 正しく画面表示されるか
     assert_template 'users/new'
-    # assert_select 'div.<CSS class for field with error>'
-    assert_select 'form[action="/signup"]'
+    # 以下でエラーが発生する。.のあとに<があるのがダメと言われる。
+    #assert_select 'div#<CSS id for error explanation>'
+    #assert_select 'div.<CSS class for field with error>'
+    # 以下はおそらく不要。どこかで混ぜ込まれたか。
+    #assert_select 'form[action="/signup"]'
   end
 
   test "valid signup information" do

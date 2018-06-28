@@ -78,7 +78,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # 10.4.3 ログインしていない状態で削除を行った場合
   test "should redirect destroy when not logged in" do
     # 10.4.3 削除を実行した際にユーザー数が変わっていないか
-    asert_no_difference 'User.count' do
+    assert_no_difference 'User.count' do
       delete user_path(@user)
     end
     # 10.4.3 ログイン画面へリダイレクトしているか

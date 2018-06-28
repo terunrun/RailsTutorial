@@ -102,7 +102,7 @@ class UsersController < ApplicationController
 
     # 10.4.2 管理者ユーザーでない場合はhome(root)へリダイレクト
     def admin_user
-      redirct_to(root_url) unless current_user.admin?
+      redirect_to(root_url) unless current_user.admin?
     end
 
 end
