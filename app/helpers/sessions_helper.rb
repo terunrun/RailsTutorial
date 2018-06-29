@@ -34,7 +34,8 @@ module SessionsHelper
       # 9.1.2 永続セッションに存在するuser_idでDBを検索してuserに格納
       user = User.find_by(id: user_id)
       # 9.1.2 DBの検索結果が存在し、cookiesのトークンがDBのダイジェストと一致するか
-      if user && user.authenticated?(cookies[:remember_token])
+      # 11.3.1 authenticated?メソッドの抽象化に伴い変更
+      if user && user.authenticated?(:remember, cookies[:remember_token])
         # 9.1.2 DB検索結果ユーザーを現在ログイン中のユーザーとしてログインする
         log_in user
         @current_user == user

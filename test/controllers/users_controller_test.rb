@@ -93,7 +93,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     # 10.4.3 root(home画面)へリダイレクトしているか
     assert_redirected_to root_url
-
   end
 
 

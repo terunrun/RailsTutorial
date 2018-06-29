@@ -1,9 +1,12 @@
 class User < ApplicationRecord
   #9.1.1 remember_token属性へのアクセサを定義
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
 
-  # DBに保存する直前に処理される。
-  before_save { email.downcase! }
+  # 6.2.5 DBに保存(save)する直前に処理される(11.1.2でメソッド参照に変更)
+  before_save :downcase_email
+  # 11.1.2 ユーザー作成の直前に処理される(メソッド参照)
+  before_create :create_activation_digest
+
   # カラムname、emailに対する精査
   validates :name, presence: true, length: {maximum: 50}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -38,14 +41,48 @@ class User < ApplicationRecord
 
   # 9.1.2 渡されたトークンがダイジェストと一致したらtrueを返す
   # has_secure_passwordで提供されるauthenticatedメソッドを応用
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  # 11.3.1 アクティベーションでも使用するため抽象化
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # 9.1.3 DBのダイジェストを削除する
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+  # 11.3.3
+  def activate
+    # 11.3.3 演習
+    #update_attribute( :activated, true )
+    #update_attribute( :activated_at, Time.zone.now )
+    update_columns( activated: true, activated_at: Time.zone.now )
+  end
+
+  # 11.3.3
+  def send_activation_mail
+    UserMailer.account_activation(self).deliver_now
+  end
+
+
+
+  private
+
+    # 11.1.2 メールアドレスを小文字化する
+    def downcase_email
+      #self.email = email.downcase
+      #11.1.2 演習：メソッド実行結果で元の値を書き換える（破壊的メソッド）
+      email.downcase!
+    end
+
+    # 11.1.2 アクティベーションダイジェストを作成する
+    def create_activation_digest
+      # 11.1.2 新規トークンを作成し、オブジェクト内部変数として保存
+      self.activation_token = User.new_token
+      # 11.1.2 新規トークンをハッシュ化し、オブジェクト内部変数として保存
+      self.activation_digest = User.digest(activation_token)
+    end
 
 end

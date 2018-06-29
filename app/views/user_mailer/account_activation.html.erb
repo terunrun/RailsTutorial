@@ -1,0 +1,25 @@
+<!--
+11.2.1 アクティベート用メールテンプレート（HTML形式）
+<h1>User#account_activation</h1>
+
+<p>
+  <%= @greeting %>, find me in app/views/user_mailer/account_activation.html.erb
+</p>
+-->
+
+<h1>Sample app</h1>
+
+<p>Hi <%= @user.name %>,</p>
+
+<p>
+Welcome to the Sample App! Click on the link below to activate your account:
+</p>
+
+<!--
+11.2.1 アクティベートの名前付きルートに有効化トークンとメールアドレスを設定
+以下のURLが生成される。
+（トークンは自動的にハッシュ化、自動的に使用不可文字はエスケープされる）
+http://www.example.com/account_activation/@user.activation_token/edit?email=***%40******
+-->
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+                                                    email: @user.email) %>

@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   post '/login', to:'sessions#create'
   delete '/logout', to:'sessions#destroy'
 
+  # 11.1.1 editアクションへの名前付きルート(edit_account_activation_url)
+  resources :account_activations, only: [:edit]
 
 end

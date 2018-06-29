@@ -8,11 +8,14 @@
 
 # 10.3.2 サンプルユーザーを作成
 # 10.4.1 初めのユーザーのみadminにする
+# 11.1.2 アクティベート関連項目を設定
 User.create!( name: "Example user",
               email: "example@railstutorial.org",
               password: "foobar",
               password_confirmation: "foobar",
-              admin: true )
+              admin: true,
+              activated: true,
+              activated_at: Time.zone.now )
 
 99.times do |n|
   name = Faker::Name.name
@@ -21,5 +24,7 @@ User.create!( name: "Example user",
   User.create!( name: name,
                 email: email,
                 password: password,
-                password_confirmation: password)
+                password_confirmation: password,
+                activated: true,
+                activated_at: Time.zone.now )
 end

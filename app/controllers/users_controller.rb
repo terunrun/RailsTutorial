@@ -8,12 +8,17 @@ class UsersController < ApplicationController
   def index
     # 10.3.3 ページネーションが認識できる形式に変更
     # @users = User.all
-    @users = User.paginate( page: params[:page])
+    # 11.3.3 演習：アクティベート未のユーザーを抽出しない
+    # 11.3.3 whereメソッドで絞ったものの中からpaginateオブジェクトを作成
+    # @users = User.paginate( page: params[:page])
+    @users = User.where( activated: true ).paginate( page: params[:page])
   end
 
   def show
     # Userをidで検索してインスタンス変数に保存
     @user = User.find(params[:id])
+    # 11.3.3 アクティベート未の場合はルート(home)へリダイレクト
+    redirect_to root_url unless @user.activated?
     #debugger
   end
 
@@ -28,12 +33,19 @@ class UsersController < ApplicationController
     if @user.save
       # DBへの保存が正常終了した場合
       # 8.2.5 ユーザー登録と同時にログインする
-      log_in(@user)
+      # 11.2.4 アクティベーションの実装により変更
+      # log_in(@user)
+      # 11.3.3 user.rbへリファクタリング
+      @user.send_activation_mail
       # 一度だけ表示されるメッセージを表示
-      flash[:success] = "Sample Appへようこそ！"
+      # 11.2.4 アクティベーションの実装により変更
+      #flash[:success] = "Sample Appへようこそ！"
+      flash[:success] = "ご登録のメールアドレスにアカウント有効化のメールを送信しました！"
       # 登録したユーザーのページへリダイレクト
       # redirect_to user_url(@user)と等価
-      redirect_to @user
+      # 11.2.4 アクティベーションの実装により変更、root(home)へリダイレクト
+      # redirect_to @user
+      redirect_to root_url
     else
       # DBへの保存が異常終了した場合
       # ユーザー登録画面を表示
@@ -67,7 +79,6 @@ class UsersController < ApplicationController
     flash[:success] = "ユーザーの削除に成功しました！"
     redirect_to users_url
   end
-
 
 
   # 10.2.1 以下、beforeアクションを記述

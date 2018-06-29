@@ -7,18 +7,25 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     # 検索結果が存在し、フォームから送られたパスワードと一致するかを確認
     if user && user.authenticate(params[:session][:password])
-      # 8.2.1 SessionsHelperのlog_inメソッドを使用して一時セッションを作成
-      log_in user
-      # 9.1.2 ログイン状態を保持
-      # 9.2 remember_meチェックが入っている場合にログイン情報を覚えさせる（三項目演算子記法）
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      # flashに成功メッセージを設定
-      flash[:success] = "ログインに成功しました。"
-      # 8.2.1 ログインユーザーの画面へリダイレクト
-      # 8.2.1 user_url(user)と等価。引数ユーザーのプロフィールページへのルーティングを作成
-      # redirect_to user
-      # 10.2.3 元URLへリダイレクト（ない場合はプロフィールページ）
-      redirect_back_or user
+      # 11.3.2 アクティベート済かどうかを確認
+      if user.activated?
+        # 8.2.1 SessionsHelperのlog_inメソッドを使用して一時セッションを作成
+        log_in user
+        # 9.1.2 ログイン状態を保持
+        # 9.2 remember_meチェックが入っている場合にログイン情報を覚えさせる（三項目演算子記法）
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        # flashに成功メッセージを設定
+        flash[:success] = "ログインに成功しました。"
+        # 8.2.1 ログインユーザーの画面へリダイレクト
+        # 8.2.1 user_url(user)と等価。引数ユーザーのプロフィールページへのルーティングを作成
+        # redirect_to user
+        # 10.2.3 元URLへリダイレクト（ない場合はプロフィールページ）
+        redirect_back_or user
+      else
+        # 11.3.2 アクティベート未の場合はルート（home）へリダイレクト
+        flash[:warning] = "アクティベートが行われていません！メールを確認してください！"
+        redirect_to root_url
+      end
     else
       # flashに失敗メッセージを設定。一度で消えるようにするためflash.nowを使用。
       flash.now[:danger] = "ログインに失敗しました。
