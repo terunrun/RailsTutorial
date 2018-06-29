@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     # Userをidで検索してインスタンス変数に保存
     @user = User.find(params[:id])
     # 11.3.3 アクティベート未の場合はルート(home)へリダイレクト
-    redirect_to root_url unless @user.activated?
+    redirect_to root_url and return unless @user.activated?
     #debugger
   end
 
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       # 11.2.4 アクティベーションの実装により変更
       # log_in(@user)
       # 11.3.3 user.rbへリファクタリング
-      @user.send_activation_mail
+      @user.send_activation_email
       # 一度だけ表示されるメッセージを表示
       # 11.2.4 アクティベーションの実装により変更
       #flash[:success] = "Sample Appへようこそ！"

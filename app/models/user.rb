@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  #9.1.1 remember_token属性へのアクセサを定義
-  attr_accessor :remember_token, :activation_token
+  #9.1.1 remember_token属性へのアクセサを定義(:activation_tokenは11、:reset_tokenは12.1.2)
+  attr_accessor :remember_token, :activation_token, :reset_token
 
   # 6.2.5 DBに保存(save)する直前に処理される(11.1.2でメソッド参照に変更)
   before_save :downcase_email
@@ -53,7 +53,7 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
-  # 11.3.3
+  # 11.3.3 有効化済にして有効化日時とともにDBへ格納
   def activate
     # 11.3.3 演習
     #update_attribute( :activated, true )
@@ -61,11 +61,29 @@ class User < ApplicationRecord
     update_columns( activated: true, activated_at: Time.zone.now )
   end
 
-  # 11.3.3
-  def send_activation_mail
+  # 11.3.3 有効化用のメールを送信
+  def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end
 
+  # 12.1.2 パスワード再設定用のダイジェストを作成してメール送信日時とともにDBへ格納
+  def create_reset_digest
+    self.reset_token = User.new_token
+    # 12.3.3 演習
+    #update_attribute(:reset_digest, User.digest(reset_token))
+    #update_attribute(:reset_sent_at, Time.zone.now)
+    update_columns( reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now )
+  end
+
+  # 12.1.2 パスワード再設定用のメールを送信
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # 12.3.2 パスワード再設定メール送信から所定時間が経過しているか
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
 
 
   private
