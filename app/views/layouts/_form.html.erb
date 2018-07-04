@@ -2,7 +2,8 @@
      そのため結果によってPATCH/POSTリクエストになる-->
 <%= form_for(@user) do |f| %>
   <!-- エラーメッセージ用pertial画面-->
-  <%= render 'shared/error_messages' %>
+  <!-- 13.3.2 objectを使用するように修正 -->
+  <%= render 'shared/error_messages', object: f.object %>
 
   <%= f.label :name %>
   <!-- form-controlクラスでエラー時のフォーム表示を変更-->

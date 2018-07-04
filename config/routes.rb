@@ -29,4 +29,9 @@ Rails.application.routes.draw do
   # GET	  /password_resets/<token>/edit	edit	 edit_password_reset_url(token)
   # PATCH /password_resets/<token>	    update password_reset_url(token)
   resources :password_resets, only: [:new, :create, :edit, :update]
+
+  # 13.3 Micropostの名前付きルート
+  # POST   /microposts   create  microposts_path
+  # DELETE /microposts/1 destroy micropost_path(micropost)
+  resources :microposts, only: [:create, :destroy]
 end

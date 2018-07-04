@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  # 13.1.3 micropostsと1対多の関係を持たせる
+  # 13.1.4 userが削除されたときに同時に削除する
+  has_many :microposts, dependent: :destroy
+
   #9.1.1 remember_token属性へのアクセサを定義(:activation_tokenは11、:reset_tokenは12.1.2)
   attr_accessor :remember_token, :activation_token, :reset_token
 
@@ -83,6 +87,12 @@ class User < ApplicationRecord
   # 12.3.2 パスワード再設定メール送信から所定時間が経過しているか
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  # 13.3.3 feedの原型
+  def feed
+    # 13.3.3 user_idがidであるmicropostを検索
+    Micropost.where('user_id = ?', id)
   end
 
 

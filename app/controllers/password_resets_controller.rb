@@ -65,7 +65,7 @@ class PasswordResetsController < ApplicationController
   # 12.3.2 パスワード再設定期限が切れていないか確認する
   def check_exiration
     if @user.password_reset_expired?
-      message = "パスワード再設定の有効期限が切れています！再度再設定登録を行ってください。"
+      message = "expired!パスワード再設定の有効期限が切れています！再度再設定登録を行ってください。"
       flash[:danger] = message
       redirect_to new_password_reset_url
     end

@@ -69,17 +69,19 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
   end
 
   # 12.3.3 演習
-  # test "expired token" do
-  #   get new_password_reset_path
-  #   post password_resets_path, params: { password_reset: {email: @user.email}}
-  #   @user = assigns(:user)
-  #   @user.update_attribute(:reset_sent_at, 3.hours.ago)
-  #   patch password_reset_path(@user.reset_token),
-  #         params: { email: @user.email,
-  #                   user: {password: "example", password_confirmation: "example"} }
-  #   assert_response :redirect
-  #   follow_redirect!
-  #   assert_match /expire/i, response.body
-  # end
+  test "expired token" do
+    get new_password_reset_path
+    post password_resets_path, params: { password_reset: {email: @user.email}}
+    @user = assigns(:user)
+    @user.update_attribute(:reset_sent_at, 3.hours.ago)
+    patch password_reset_path(@user.reset_token),
+          params: { email: @user.email,
+                    user: {password: "example", password_confirmation: "example"} }
+    # 12.3.3 ？？？
+    assert_response :redirect
+    follow_redirect!
+    # 12.3.3 返却された画面のbocy部に「expired」という単語が存在するか
+    assert_match /expire/i, response.body
+  end
 
 end

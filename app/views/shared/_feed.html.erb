@@ -1,0 +1,10 @@
+<!-- 13.3.3. -->
+<% if @feed_items.any? %>
+  <ol class="microposts">
+    <!-- 13.3.3 @feed_itemsの各要素がMicropostクラスを持っているため、 -->
+    <!-- 13.3.3 以下の書き方でRailsはMicropostのパーシャルを呼び出すことができる -->
+    <!-- 13.3.3 app/views/microposts/_micropost.html.erbを探しに行く -->
+    <%= render @feed_items %>
+  </ol>
+  <%= will_paginate @feed_items %>
+<% end %>

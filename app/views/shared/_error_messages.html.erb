@@ -1,13 +1,14 @@
 <!-- @userがエラーメッセージを保持するか -->
-<% if @user.errors.any? %>
+<!-- 13.3.2 Usersオブジェクト以外でも動作するように修正(@user⇒object) -->
+<% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
       <!-- エラーメッセージの数を表示 -->
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
+      The form contains <%= pluralize(object.errors.count, "error") %>.
     </div>
     <ul>
       <!-- エラーメッセージを表示 -->
-      <% @user.errors.full_messages.each do |msg| %>
+      <% object.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     <ul>

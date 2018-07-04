@@ -25,7 +25,7 @@ class UserSignupTest < ActionDispatch::IntegrationTest
     #assert_select 'div#<CSS id for error explanation>'
     #assert_select 'div.<CSS class for field with error>'
     # 以下でエラーが発生する。当該のdivタグはないと言われる。
-    #assert_select 'div#error_explanation'
+    # assert_select 'div#error_explanation'
     #assert_select 'div.field_with_error'
     # 以下はおそらく不要。どこかで混ぜ込まれたか。
     #assert_select 'form[action="/signup"]'

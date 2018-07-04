@@ -17,6 +17,8 @@ class UsersController < ApplicationController
   def show
     # Userをidで検索してインスタンス変数に保存
     @user = User.find(params[:id])
+    # 13.2.1 usersコントローラーのコンテキストからmicropostをページネーションするため
+    @microposts = @user.microposts.paginate(page: params[:page])
     # 11.3.3 アクティベート未の場合はルート(home)へリダイレクト
     redirect_to root_url and return unless @user.activated?
     #debugger
@@ -84,16 +86,17 @@ class UsersController < ApplicationController
   # 10.2.1 以下、beforeアクションを記述
 
   # 10.2.1
-  def logged_in_user
-    # 10.2.1 ログイン済ユーザーかどうかを確認する
-    unless logged_in?
-      # 10.2.4 元URLを退避
-      store_location
-      flash[:danger] = "ログインしてください！"
-      # 10.2.1 ログイン画面へリダイレクト
-      redirect_to login_url
-    end
-  end
+  # 13.3.1 micropostコントローラーでも使用するため、ApplicationControllerへリファクタリング
+  # def logged_in_user
+  #   # 10.2.1 ログイン済ユーザーかどうかを確認する
+  #   unless logged_in?
+  #     # 10.2.4 元URLを退避
+  #     store_location
+  #     flash[:danger] = "ログインしてください！"
+  #     # 10.2.1 ログイン画面へリダイレクト
+  #     redirect_to login_url
+  #   end
+  # end
 
   # 10.2.2
   def correct_user

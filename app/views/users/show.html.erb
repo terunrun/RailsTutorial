@@ -9,4 +9,16 @@
       </h1>
     </section>
   </aside>
+  <!-- 13.2.1 userに紐づくmicropostを表示 -->
+  <div class="col-md-8">
+    <!-- userに紐づくmicropostがあるか -->
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <!-- 順序付きリストでmicropostを表示 -->
+      <ol class="microposts">
+        <%= render @microposts %>
+      </ol>
+      <%= will_paginate @microposts %>
+    <% end %>
+  </div>
 </div>

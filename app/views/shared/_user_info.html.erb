@@ -1,0 +1,6 @@
+<!-- 13.3.2 ログインユーザーのサイドバー -->
+<%= link_to gravatar_for(current_user, size: 50), current_user %>
+<h1><%= current_user.name %></h1>
+<span><%= link_to "view my profile", current_user %></span>
+<!-- ユーザーに紐づくマイクロポスト数を表示（pluralizeによって正しい単数系・複数形に対応） -->
+<span><%= pluralize(current_user.microposts.count, "micropost") %></span>

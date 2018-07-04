@@ -1,0 +1,26 @@
+<!-- 13.3.2 マイクロポスト作成用パーシャル -->
+<%= form_for(@micropost) do |f| %>
+  <!-- 13.3.2 発生したエラーメッセージを表示 -->
+  <!-- 13.3.2 fをf.objectとすることで関連付けられたオブジェクトへアクセス可能とする -->
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <!-- 13.3.2 pleaceholder属性で入力欄内の表示を指定 -->
+    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+  </div>
+  <%= f.submit "Post", class: "btn btn-primary" %>
+  <!-- 13.4.1 画像アップロード -->
+  <!-- 13.4.2 アップロードファイルへの精査を反映させるためaccept要素を追加 -->
+  <span class="picture">
+    <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+  </span>
+<% end %>
+
+<!-- 13.4.2 JQueryでアラートを表示する（不十分ではある。） -->
+<script type="text/javascript">
+  $('#micropost_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

@@ -50,3 +50,13 @@ gem 'faker', '1.7.3'
 # 10.3.3 ページネーション
 gem 'will_paginate', '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
+
+# 13.4.1 画像アップロード
+gem 'carrierwave',             '1.2.2'
+# 13.4.1 画像サイズ変更など
+gem 'mini_magick',             '4.7.0'
+
+# 13.4.1 本番環境での画像アップロード
+group :production do
+  gem 'fog', '1.42'
+end
