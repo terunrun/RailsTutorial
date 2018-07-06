@@ -60,3 +60,4 @@ gem 'mini_magick',             '4.7.0'
 group :production do
   gem 'fog', '1.42'
 end
+
