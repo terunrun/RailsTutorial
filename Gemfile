@@ -14,7 +14,7 @@ group :development, :test do
   gem 'byebug',  '9.0.6', platform: :mri
   #gem 'byebug',  '~>9.0.6', platform: :ruby
 #guard�����s�����Ɠ������ƌ����ꂽgem
-  gem 'wdm', '>= 0.1.0'
+  # gem 'wdm', '>= 0.1.0'
 end
 
 group :development do
@@ -60,4 +60,3 @@ gem 'mini_magick',             '4.7.0'
 group :production do
   gem 'fog', '1.42'
 end
-
