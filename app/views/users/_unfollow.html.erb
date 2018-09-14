@@ -1,0 +1,7 @@
+<!-- 14.2.2 新規作成 -->
+<!-- remote_toを使うことでAjax対応となる -->
+<%= form_for(current_user.active_relationships.find_by(followed_id: @user.id),
+             html: { method: :delete },
+             remote_to: true) do |f| %>
+  <%= f.submit "Unfollow", class: "btn" %>
+<% end %>

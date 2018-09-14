@@ -8,9 +8,15 @@
        <%= @user.name %>
       </h1>
     </section>
+    <!-- 14.2.2 フォローリンク追加 -->
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
   </aside>
   <!-- 13.2.1 userに紐づくmicropostを表示 -->
   <div class="col-md-8">
+    <!-- 14.2.2 フォローリンク追加 -->
+    <%= render 'follow_form' if logged_in? %>
     <!-- userに紐づくmicropostがあるか -->
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>

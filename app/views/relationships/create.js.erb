@@ -1,0 +1,3 @@
+// 14.2.5 Ajaxリクエストの場合、アクションと同名のruby組み込みjsファイルが呼ばれる
+$("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>");
+$("#followers").html('<%= @user.followers.count %>');

@@ -1,0 +1,19 @@
+<!-- 14.2.2 新規作成 -->
+<!-- Homeでは@userがnilのため現在ログインしているユーザーを代入 -->
+<% @user ||= current_user %>
+<div class="stats">
+  <a href="<%= following_user_path(@user) %>">
+    <strong id="following" class="stat">
+      <!-- @userがフォローしている（following）数 -->
+      <%= @user.following.count %>
+    </strong>
+    following
+  </a>
+  <a href="<%= followers_user_path(@user) %>">
+    <strong id="followers" class="stat">
+      <!-- @userをフォローしている（follower）数 -->
+      <%= @user.followers.count %>
+    </strong>
+    followers
+  </a>
+</div>

@@ -3,6 +3,16 @@ class User < ApplicationRecord
   # 13.1.4 userが削除されたときに同時に削除する
   has_many :microposts, dependent: :destroy
 
+  # 14.1.2 follower_idを外部キーとして、actiove_relatiohshipsという名でRelationshipクラスと関連付け
+  has_many :active_relationships, class_name:  "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent:   :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :passive_relationships, class_name: "Relationship",
+                                  foreign_key: "followed_id",
+                                  dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :follower
+
   #9.1.1 remember_token属性へのアクセサを定義(:activation_tokenは11、:reset_tokenは12.1.2)
   attr_accessor :remember_token, :activation_token, :reset_token
 
@@ -92,25 +102,46 @@ class User < ApplicationRecord
   # 13.3.3 feedの原型
   def feed
     # 13.3.3 user_idがidであるmicropostを検索
-    Micropost.where('user_id = ?', id)
+    # Micropost.where('user_id = ?', id)
+    # 14.3.2 ユーザーがフォローしているユーザーのフィードも表示するように変更
+    # Micropost.where('user_id IN (?) OR user_id = ?', following_ids, id)
+    # 14.3.3 サブセレクトを使用するように修正
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE follower_id = :user_id"
+    # following_idsに代入した生のSQLで検索を実行、?でなく変数を設定するのは同じ変数が今後出た場合への備え
+    Micropost.where("user_id IN (#{following_ids})
+                     OR user_id = :user_id", user_id: id)  end
+
+  # 14.1.4 フォローメソッド、引数のユーザーをfollowing配列の末尾に追加
+  def follow(other_user)
+    following << other_user
   end
 
+  # 14.1.4 アンフォローメソッド、引数のユーザーをrelationshipモデルから削除
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # 14.1.4 引数のユーザーがfollowing配列に含まれている場合はtrue
+  def following?(other_user)
+    following.include?(other_user)
+  end
 
   private
 
-    # 11.1.2 メールアドレスを小文字化する
-    def downcase_email
-      #self.email = email.downcase
-      #11.1.2 演習：メソッド実行結果で元の値を書き換える（破壊的メソッド）
-      email.downcase!
-    end
+  # 11.1.2 メールアドレスを小文字化する
+  def downcase_email
+    #self.email = email.downcase
+    #11.1.2 演習：メソッド実行結果で元の値を書き換える（破壊的メソッド）
+    email.downcase!
+  end
 
-    # 11.1.2 アクティベーションダイジェストを作成する
-    def create_activation_digest
-      # 11.1.2 新規トークンを作成し、オブジェクト内部変数として保存
-      self.activation_token = User.new_token
-      # 11.1.2 新規トークンをハッシュ化し、オブジェクト内部変数として保存
-      self.activation_digest = User.digest(activation_token)
-    end
+  # 11.1.2 アクティベーションダイジェストを作成する
+  def create_activation_digest
+    # 11.1.2 新規トークンを作成し、オブジェクト内部変数として保存
+    self.activation_token = User.new_token
+    # 11.1.2 新規トークンをハッシュ化し、オブジェクト内部変数として保存
+    self.activation_digest = User.digest(activation_token)
+  end
 
 end

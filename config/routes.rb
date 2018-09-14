@@ -34,4 +34,19 @@ Rails.application.routes.draw do
   # POST   /microposts   create  microposts_path
   # DELETE /microposts/1 destroy micropost_path(micropost)
   resources :microposts, only: [:create, :destroy]
+
+  # 14.2.2 followingアクションとfollowersアクションを追加
+  # GET	/users/1/following	following	following_user_path(1)
+  # GET	/users/1/followers	followers	followers_user_path(1)
+  resources :users do
+    member do
+      # memberメソッドを使用するとidを含むURLを作成する
+      get :following, :followers
+    end
+  end
+
+  # 14.2.2 Relationshipの名前付きルート
+  resources :relationships, only: [:create, :destroy]
+
+
 end

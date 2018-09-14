@@ -2,9 +2,8 @@
 class PictureUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # 13.4.3 画像リサイズのためコメントアウトを外して追記したが、エラーが出るのでいったん戻す★
-  # include CarrierWave::MiniMagick
-  # process resize_to_limit: [400, 400]
+  include CarrierWave::MiniMagick
+  process resize_to_limit: [400, 400]
 
   # Choose what kind of storage to use for this uploader:
   # 13.4.4 本番環境設定を追記したが本番環境で動かなかったのでいったんコメントアウト

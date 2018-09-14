@@ -1,0 +1,13 @@
+<!-- 14.2.2 新規作成 -->
+<!-- 現在ログインしているユーザーが表示しているユーザーでない場合に表示 -->
+<% unless current_user?(@user) %>
+  <div id="follow_form">
+    <% if current_user.following?(@user) %>
+      <!-- 現在ログインしているユーザーが表示しいてるユーザーをフォローしている場合 -->
+      <%= render 'unfollow' %>
+    <% else %>
+      <!-- 現在ログインしているユーザーが表示しいてるユーザーをフォローしていない場合 -->
+      <%= render 'follow' %>
+    <% end %>
+  </div>
+<% end %>

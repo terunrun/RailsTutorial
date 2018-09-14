@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # 10.2.1 10.2.2 10.4.2 edit/updateアクション実行前に実行されるメソッドを定義
-  before_action :logged_in_user, only: [:edit, :update, :index, :destroy]
+  before_action :logged_in_user, only: [:edit, :update, :index, :destroy,:following, :followers]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
 
@@ -105,6 +105,22 @@ class UsersController < ApplicationController
     redirect_to(root_url) unless current_user?(@user)
   end
 
+  # 14.2.3 フォローしているユーザー一覧表示アクション
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  # 14.2.3 フォロワー一覧表示アクション
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    # followingと表示する内容がほぼ同じのため共通パーシャルとする
+    render 'show_follow'
+  end
 
   # 以下、privateメソッドを記述
   private
